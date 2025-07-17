@@ -72,10 +72,10 @@ int main(int argc, char* argv[]) {
     main_layout->addLayout(instruction_buttons);
 
     // NOTE: 通过 `Widget` 创建窗口，连接主布局然后显示，否则布局不会显示出来
-    QWidget window;
-    window.setLayout(main_layout);
-    window.setWindowTitle("QQ Login System");
-    window.show();
+    QWidget *window = new QWidget();
+    window->setLayout(main_layout);
+    window->setWindowTitle("QQ Login System");
+    window->show();
 
     return app.exec();
 }
