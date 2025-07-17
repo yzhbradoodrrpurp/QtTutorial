@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>QQLoginSystem</class>
- <widget class="QWidget" name="QQLoginSystem">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -37,14 +37,14 @@
    </property>
    <layout class="QHBoxLayout" name="buttonLayout">
     <item>
-     <widget class="QPushButton" name="commitButton">
+     <widget class="QPushButton" name="commit_button">
       <property name="text">
        <string>Commit</string>
       </property>
      </widget>
     </item>
     <item>
-     <widget class="QPushButton" name="cancelButton">
+     <widget class="QPushButton" name="cancel_button">
       <property name="text">
        <string>Cancel</string>
       </property>
@@ -83,10 +83,10 @@
     <item>
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
-       <widget class="QLineEdit" name="lineEdit"/>
+       <widget class="QLineEdit" name="id_lineEdit"/>
       </item>
       <item>
-       <widget class="QLineEdit" name="idpasswordlineEdit"/>
+       <widget class="QLineEdit" name="password_lineEdit"/>
       </item>
      </layout>
     </item>

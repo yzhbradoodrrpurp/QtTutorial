@@ -16,6 +16,10 @@ find_package(Qt6 REQUIRED COMPONENTS Widgets)
 add_executable(001 Tutorials/001intro.cpp)
 add_executable(002 Tutorials/002QQLoginSystem.ui Tutorials/002UseUI.cpp)
 
+add_executable(FirstWidget Projects/FirstWidget/main.cpp Projects/FirstWidget/QQLoginSystem.ui Projects/FirstWidget/QQLoginSystem.cpp Projects/FirstWidget/QQLoginSystem.h)
+
 # link the libraries of Qt to a specified executable project
 target_link_libraries(001 PRIVATE Qt6::Widgets)
 target_link_libraries(002 PRIVATE Qt6::Widgets)
+
+target_link_libraries(FirstWidget PRIVATE Qt6::Widgets)

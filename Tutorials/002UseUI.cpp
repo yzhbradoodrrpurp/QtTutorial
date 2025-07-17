@@ -19,7 +19,7 @@ int main(int argc, char* argv[]) {
     QWidget *window = new QWidget();
 
     // 通过 `ui_002QQLoginSystem.h` 头文件中的 `Ui::Form` 加载该 ui
-    Ui::Form ui;
+    Ui::QQLoginSystem ui;
     // 在 Widget 中设置该 ui
     ui.setupUi(window);
     // 显示出来
