@@ -25,6 +25,5 @@ int main(int argc, char* argv[]) {
     // 显示出来
     window->show();
 
-
     return app.exec();
 }
