@@ -17,6 +17,7 @@ public:
 public slots:
     void import();
     void save();
+    void update_time();
 
 private:
     Ui::notebook ui;
