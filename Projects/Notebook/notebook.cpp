@@ -3,9 +3,13 @@
 //
 
 #include "notebook.h"
-#include <QDateTime>
-#include <QTimer>
-#include <QAbstractSpinBox>
+#include <QDateTime> // to set up current time
+#include <QTimer> // to update time in real time
+#include <QAbstractSpinBox> // to cover unwanted buttons
+#include <QString> // to use `QString`
+#include <QFileDialog> // to open the file-selecting window
+#include <QFile> // to open the file
+#include <QTextStream>
 
 Notebook::Notebook(QMainWindow* parent): QMainWindow(parent) {
     // load UI
@@ -30,7 +34,21 @@ Notebook::Notebook(QMainWindow* parent): QMainWindow(parent) {
 
 Notebook::~Notebook() {}
 
-void Notebook::import(){}
+void Notebook::import() {
+    // select the name of wanted files according to their types
+    QString fileName = QFileDialog::getOpenFileName(this, "Import a File", "", "Text Files (*.txt *.md *.py)");
+
+    if (not fileName.isEmpty()) {
+        QFile file(fileName); // import the file
+
+        // open the file in read-only mode and text mode
+        if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+            QTextStream in(&file); // use text stream to read the file
+            ui.textEdit->setPlainText(in.readAll()); // redirect the content in text stream to `textEdit`
+            file.close();
+        }
+    }
+}
 
 void Notebook::save(){}
 
