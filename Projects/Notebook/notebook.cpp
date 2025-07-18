@@ -50,7 +50,20 @@ void Notebook::import() {
     }
 }
 
-void Notebook::save(){}
+void Notebook::save(){
+    // pick name to the file
+    QString fileName = QFileDialog::getSaveFileName(this, "Save the File", "", "Text Files (*.txt *.md)");
+
+    if (not fileName.isEmpty()) {
+        QFile file(fileName); // create a file to store the content
+
+        if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+            QTextStream out(&file); // create a stream to write the file
+            out << ui.textEdit->toPlainText(); // write the content of `textEdit` into the stream
+            file.close();
+        }
+    }
+}
 
 void Notebook::update_time() {
     ui.dateTimeEdit->setDateTime(QDateTime::currentDateTime());
