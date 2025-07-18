@@ -18,6 +18,7 @@ add_executable(002 Tutorials/002QQLoginSystem.ui Tutorials/002UseUI.cpp)
 
 add_executable(FirstWidget Projects/FirstWidget/main.cpp Projects/FirstWidget/QQLoginSystem.ui Projects/FirstWidget/QQLoginSystem.cpp Projects/FirstWidget/QQLoginSystem.h)
 add_executable(AfterClass Projects/AfterClass/main.cpp Projects/AfterClass/teacher.h Projects/AfterClass/student.h Projects/AfterClass/teacher.cpp Projects/AfterClass/student.cpp)
+add_executable(Notebook Projects/Notebook/main.cpp Projects/Notebook/notebook.cpp Projects/Notebook/notebook.ui Projects/Notebook/notebook.h)
 
 # link the libraries of Qt to a specified executable project
 target_link_libraries(001 PRIVATE Qt6::Widgets)
@@ -25,3 +26,4 @@ target_link_libraries(002 PRIVATE Qt6::Widgets)
 
 target_link_libraries(FirstWidget PRIVATE Qt6::Widgets)
 target_link_libraries(AfterClass PRIVATE Qt6::Widgets)
+target_link_libraries(Notebook PRIVATE Qt6::Widgets)
