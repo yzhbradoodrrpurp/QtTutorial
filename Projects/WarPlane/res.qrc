@@ -1,0 +1,44 @@
+<RCC>
+    <qresource prefix="/">
+        <file>res/app.ico</file>
+        <file>res/bg.wav</file>
+        <file>res/bullet_1.png</file>
+        <file>res/bullet_2.png</file>
+        <file>res/bullet_3.png</file>
+        <file>res/bullet_4.png</file>
+        <file>res/bullet_5.png</file>
+        <file>res/bullet_6.png</file>
+        <file>res/bullet_7.png</file>
+        <file>res/bullet_8.png</file>
+        <file>res/bullet_9.png</file>
+        <file>res/bullet_10.png</file>
+        <file>res/bullet_11.png</file>
+        <file>res/bullet_12.png</file>
+        <file>res/bullet_13.png</file>
+        <file>res/bullet_14.png</file>
+        <file>res/game.ico</file>
+        <file>res/hero.png</file>
+        <file>res/hero_bullet_7.png</file>
+        <file>res/hero2.png</file>
+        <file>res/img_bg_level_1.jpg</file>
+        <file>res/img_bg_level_2.jpg</file>
+        <file>res/img_bg_level_3.jpg</file>
+        <file>res/img_bg_level_4.jpg</file>
+        <file>res/img_bg_level_5.jpg</file>
+        <file>res/exploding.wav</file>
+        <file>res/exploding-1.png</file>
+        <file>res/exploding-2.png</file>
+        <file>res/exploding-3.png</file>
+        <file>res/exploding4.png</file>
+        <file>res/exploding-5.png</file>
+        <file>res/exploding-6.png</file>
+        <file>res/exploding-7.png</file>
+        <file>res/img-warplane_1.png</file>
+        <file>res/img-warplane_2.png</file>
+        <file>res/img-warplane_3.png</file>
+        <file>res/img-warplane_4.png</file>
+        <file>res/img-warplane_5.png</file>
+        <file>res/img-warplane_6.png</file>
+        <file>res/img-warplane_7.png</file>
+    </qresource>
+</RCC>

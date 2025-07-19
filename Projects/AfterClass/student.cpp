@@ -10,3 +10,6 @@ Student::Student(QObject *parent): QObject(parent) {}
 Student::~Student(){}
 
 void Student::treat() {}
+
+void Student::treat_chocolate() {}
+

@@ -16,5 +16,9 @@ int main(int argc, char* argv[]) {
 
     teacher->class_over();
 
+    QObject::connect(teacher, &Teacher::hungry, student, &Student::treat_chocolate);
+
+    teacher->class_over();
+
     return app->exec();
 }

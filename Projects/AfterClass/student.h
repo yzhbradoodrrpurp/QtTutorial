@@ -15,6 +15,7 @@ public:
 
 public slots:
     void treat();
+    void treat_chocolate();
 };
 
 #endif //STUDENT_H
