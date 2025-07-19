@@ -8,6 +8,8 @@
 #include <QMessageBox>
 #include <QFile>
 #include <QTextStream>
+#include <QPropertyAnimation>
+#include <QDateTime>
 
 MainScene::MainScene(QWidget *parent)
     : QWidget(parent),
@@ -182,6 +184,27 @@ void MainScene::paintEvent(QPaintEvent *event)
     painter.drawText(20, 40, QString("Score: %1").arg(score));
     painter.drawText(20, 70, QString("High Score: %1").arg(highScore));
     painter.drawText(20, 100, QString("Missed: %1/%2").arg(enemyPassedCount).arg(ENEMY_PASS_LIMIT));
+
+    // 绘制大招冷却条
+    qint64 now = QDateTime::currentMSecsSinceEpoch();
+    int cooldownLeft = (int)(KILLSHOT_COOLDOWN - (now - lastKillshotTime));
+    if (cooldownLeft > 0) {
+        int barWidth = GAME_WIDTH - 40;
+        int barHeight = 18;
+        int filledWidth = barWidth * (KILLSHOT_COOLDOWN - cooldownLeft) / KILLSHOT_COOLDOWN;
+        painter.setPen(Qt::NoPen);
+        painter.setBrush(QColor(180,180,180));
+        painter.drawRect(20, 10, barWidth, barHeight);
+        painter.setBrush(QColor(0,180,255));
+        painter.drawRect(20, 10, filledWidth, barHeight);
+        painter.setPen(Qt::black);
+        painter.setFont(QFont("Arial", 12));
+        painter.drawText(20 + barWidth/2 - 60, 24, QString("Killshot 冷却: %1秒").arg((cooldownLeft+999)/1000));
+    } else {
+        painter.setPen(Qt::green);
+        painter.setFont(QFont("Arial", 12, QFont::Bold));
+        painter.drawText(20, 24, "Killshot 已就绪，按 1 使用");
+    }
 }
 
 void MainScene::mouseMoveEvent(QMouseEvent *event)
@@ -216,6 +239,26 @@ void MainScene::keyPressEvent(QKeyEvent *e)
     if(e->key() == Qt::Key_Right) moveRight = true;
     if(e->key() == Qt::Key_Up)    moveUp = true;
     if(e->key() == Qt::Key_Down)  moveDown = true;
+    if (e->key() == Qt::Key_1 && !gameOver) {
+        qint64 now = QDateTime::currentMSecsSinceEpoch();
+        if (now - lastKillshotTime >= KILLSHOT_COOLDOWN) {
+            lastKillshotTime = now;
+            // 闪烁效果
+            QPropertyAnimation *blink = new QPropertyAnimation(this, "windowOpacity");
+            blink->setDuration(300); // 闪烁持续时间
+            blink->setKeyValueAt(0, 1.0);
+            blink->setKeyValueAt(0.2, 0.2);
+            blink->setKeyValueAt(0.5, 1.0);
+            blink->setKeyValueAt(0.7, 0.2);
+            blink->setKeyValueAt(1, 1.0);
+            blink->start(QAbstractAnimation::DeleteWhenStopped);
+            // 清除所有敌机
+            for (int i = 0; i < ENEMY_NUM; ++i) {
+                enemys[i].isFree = true;
+            }
+        }
+        // 可选：否则可以提示冷却中
+    }
 }
 void MainScene::keyReleaseEvent(QKeyEvent *e)
 {

@@ -39,5 +39,8 @@
 #define SOUND_BACKGROUND ":/res/bg.wav"
 #define SOUND_BOMB ":/res/exploding.wav"
 
+/**********  大招配置数据 **********/
+#define KILLSHOT_COOLDOWN 3000 // 大招冷却时间，单位毫秒
+
 
 #endif // CONFIG_H

@@ -119,5 +119,7 @@ public:
     int highScore = 0; // 最高分
     bool gameOver = false; // 游戏结束标志
     void showGameOver(); // 游戏结束提示
+
+    qint64 lastKillshotTime = 0; // 上次大招释放时间
 };
 #endif // WIDGET_H
