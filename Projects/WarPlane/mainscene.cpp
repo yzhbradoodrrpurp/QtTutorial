@@ -5,13 +5,20 @@
 #include <QPainter>
 #include <QSoundEffect>
 #include <QUrl>
+#include <QMessageBox>
+#include <QFile>
+#include <QTextStream>
 
 MainScene::MainScene(QWidget *parent)
     : QWidget(parent),
       timer(new QTimer(this)),
       m_map(new Map(this)),
       bgSound(new QSoundEffect(this)),
-      explodingSound(new QSoundEffect(this))
+      explodingSound(new QSoundEffect(this)),
+      score(0),
+      highScore(0),
+      enemyPassedCount(0),
+      gameOver(false)
 {
     initScene(); // 初始化场景
     playGame(); // 开始游戏
@@ -98,10 +105,20 @@ void MainScene::updatePosition()
     // 敌机坐标计算
     for(int i = 0 ; i< ENEMY_NUM;i++)
     {
-        //非空闲敌机 更新坐标
         if(enemys[i].isFree == false)
         {
             enemys[i].updatePosition();
+            // 检查是否通过底部
+            if(enemys[i].rect->y() > GAME_HEIGHT)
+            {
+                enemys[i].isFree = true;
+                enemyPassedCount++;
+                if(enemyPassedCount >= ENEMY_PASS_LIMIT && !gameOver)
+                {
+                    gameOver = true;
+                    showGameOver();
+                }
+            }
         }
     }
 
@@ -158,6 +175,13 @@ void MainScene::paintEvent(QPaintEvent *event)
             painter.drawPixmap(bombs[i].X,bombs[i].Y,bombs[i].m_pixArr[bombs[i].index]);
         }
     }
+
+    // 绘制分数和最高分
+    painter.setPen(Qt::yellow);
+    painter.setFont(QFont("Arial", 18, QFont::Bold));
+    painter.drawText(20, 40, QString("Score: %1").arg(score));
+    painter.drawText(20, 70, QString("High Score: %1").arg(highScore));
+    painter.drawText(20, 100, QString("Missed: %1/%2").arg(enemyPassedCount).arg(ENEMY_PASS_LIMIT));
 }
 
 void MainScene::mouseMoveEvent(QMouseEvent *event)
@@ -226,24 +250,20 @@ void MainScene::collisionDetection()
             {
                 enemys[i].isFree = true;
                 hero.bullets[j].isFree = true;
-
+                score++;
                 //播放音效
                 explodingSound->play();
-
                 //播放爆炸效果
                 for(int k = 0 ; k < BOMB_NUM;k++)
                 {
                     if(bombs[k].isFree)
                     {
-                        //爆炸状态设置为非空闲
                         bombs[k].isFree = false;
-                        //更新坐标
                         bombs[k].X = enemys[i].rect->x();
                         bombs[k].Y = enemys[i].rect->y();
                         break;
                     }
                 }
-
             }
         }
     }
@@ -270,5 +290,35 @@ void MainScene::enemyToScene()
                                        -enemys[i].rect->height());
             break;
         }
+    }
+}
+
+void MainScene::showGameOver()
+{
+    // 更新最高分
+    if(score > highScore) highScore = score;
+    QMessageBox msgBox;
+    msgBox.setWindowTitle("Game Over");
+    msgBox.setText(QString("游戏失败！\n当前分数: %1\n最高分: %2").arg(score).arg(highScore));
+    msgBox.setStandardButtons(QMessageBox::Retry | QMessageBox::Close);
+    msgBox.setDefaultButton(QMessageBox::Retry);
+    int ret = msgBox.exec();
+    if (ret == QMessageBox::Retry) {
+        // 重置游戏状态
+        score = 0;
+        enemyPassedCount = 0;
+        gameOver = false;
+        // 重置所有敌机
+        for(int i = 0; i < ENEMY_NUM; i++) {
+            enemys[i].isFree = true;
+        }
+        // 重置爆炸
+        for(int i = 0; i < BOMB_NUM; i++) {
+            bombs[i].isFree = true;
+        }
+        // 重置英雄位置
+        hero.setPosition(GAME_WIDTH / 2 - hero.rect->width() / 2, GAME_HEIGHT - hero.rect->height() - 30);
+    } else {
+        this->close();
     }
 }

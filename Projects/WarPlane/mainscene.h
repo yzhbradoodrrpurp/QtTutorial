@@ -112,5 +112,12 @@ public:
     bool moveRight = false;
     bool moveUp = false;
     bool moveDown = false;
+
+    int enemyPassedCount = 0; // 已通过底部的敌机数
+    const int ENEMY_PASS_LIMIT = 10; // 最大允许通过数，可根据需要调整
+    int score = 0; // 当前分数
+    int highScore = 0; // 最高分
+    bool gameOver = false; // 游戏结束标志
+    void showGameOver(); // 游戏结束提示
 };
 #endif // WIDGET_H
